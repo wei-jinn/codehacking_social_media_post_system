@@ -5,6 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-
+    Hello. You are an admin now.
 </body>
 </html>
