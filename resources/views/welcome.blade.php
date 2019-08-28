@@ -11,6 +11,11 @@
                     Your Application's Landing Page.
                 </div>
             </div>
+            @if(Session::has('not_admin'))
+                <p class ="bg-danger">{{session('not_admin')}}</p>
+
+
+            @endif
         </div>
     </div>
 </div>

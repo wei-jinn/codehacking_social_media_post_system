@@ -25,14 +25,14 @@
 
         <tr>
             <td>{{$user->id}}</td>
-            <td><img height="50" src="{{$user->photo ? $user->photo->file :'https://placehold.it/400x400'}}" alt=""></td> //some users do not have photos
+            <td><img height="50" src="{{$user->photo ? $user->photo->file :'https://placehold.it/400x400'}}" alt=""></td>
             <td><a href="{{route('admin.users.edit', $user->id)}}">{{$user->name}}</a></td>
             <td>{{$user->email}}</td>
             <td>{{$user->role->name}}</td>
             <td>{{$user->is_active ==1 ? 'Active' : 'Inactive'}}
             </td>
             <td>{{$user->created_at->diffForHumans()}}</td>
-            <td>{{$user->updated_at}}</td>
+            <td>{{$user->updated_at->diffForHumans()}}</td>
         </tr>
 
         @endforeach
@@ -41,4 +41,9 @@
 
         </tbody>
     </table>
+
+    @if(Session::has('deleted_user'))
+    <p class ="bg-danger">{{session('deleted_user')}}</p>
+
+    @endif
     @stop

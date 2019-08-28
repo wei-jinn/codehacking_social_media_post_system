@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Session;
 
 class User extends Authenticatable
 {
@@ -31,6 +32,29 @@ class User extends Authenticatable
     public function photo(){
 
         return $this->belongsTo('App\Photo');
+
+    }
+
+//    public function setPasswordAttribute($password){
+//
+//        if(!empty($password)){
+//
+//            $this->attributes['password'] = bcrypt($password);
+//
+//        }
+//
+//    }
+
+    public function isAdmin(){
+
+    if($this->role['name'] == "administrator" && $this->is_active == 1){
+
+        return true;
+
+    }
+
+        Session::flash('not_admin', ' Access denied. You are not an active admin');
+    return false;
 
     }
 
