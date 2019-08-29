@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Http\Requests\PostsCreateRequest;
+use App\Photo;
+use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AdminPostsController extends Controller
 {
@@ -16,7 +23,10 @@ class AdminPostsController extends Controller
     public function index()
     {
         //
-        return view('admin.posts.index');
+
+        $posts = Post::all();
+
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -27,7 +37,8 @@ class AdminPostsController extends Controller
     public function create()
     {
         //
-        return view('admin.posts.create');
+        $categories = Category::lists('name', 'id')->all();
+        return view('admin.posts.create', compact('categories'));
 
     }
 
@@ -37,9 +48,26 @@ class AdminPostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostsCreateRequest $request)
     {
+
+        $input = $request->all();
         //
+
+        $user = Auth::user();
+
+        if($file = $request->file('photo_id')){
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo = Photo::create(['file' => $name]);
+            $input['photo_id'] = $photo->id;
+        }
+
+        $user->posts()->create($input);
+
+        return redirect('/admin/posts');
+
+
     }
 
     /**
@@ -62,7 +90,10 @@ class AdminPostsController extends Controller
     public function edit($id)
     {
         //
-        return view('admin.posts.edit');
+        $post = Post::findOrFail($id);
+        $categories = Category::lists('name','id')->all();
+        return view('admin.posts.edit', compact('post', 'categories'));
+
     }
 
     /**
@@ -73,8 +104,25 @@ class AdminPostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
+
     {
         //
+        $input = $request->all();
+//        $user = Auth::user();
+
+        if($file = $request->file('photo_id')){
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo = Photo::create(['file' => $name]);
+            $input['photo_id'] = $photo->id;
+
+        }
+
+
+
+        Auth::user()->posts()->whereId($id)->first()->update($input);
+
+        return redirect('/admin/posts');
     }
 
     /**
@@ -84,7 +132,19 @@ class AdminPostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
-    }
+        {
+
+
+            $post = Post::findOrFail($id);
+
+                unlink(public_path() . $post->photo->file);
+
+            $post->delete();
+
+                Session::flash('deleted_post', ' Post deleted');
+
+                return redirect('/admin/posts');
+
+
+        }
 }
