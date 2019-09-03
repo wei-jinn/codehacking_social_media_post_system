@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
-use App\Post;
+use App\CommentReply;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
-class PostCommentsController extends Controller
+class CommentRepliesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +19,6 @@ class PostCommentsController extends Controller
     public function index()
     {
         //
-        $comments = Comment::all();
-
-        return view('admin.comments.index', compact('comments'));
     }
 
     /**
@@ -38,54 +34,49 @@ class PostCommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //
+    }
+
+    public function createReply(Request $request){
         $user = Auth::user();
 
-        $data = [
+        $data =[
 
-            'post_id' => $request->post_id,
+            'comment_id' => $request->comment_id,
             'author' => $user->name,
-            'email' => $user->email,
+            'email' =>$user->email,
             'photo' => $user->photo->file,
-            'body' => $request->body
+            'body' =>$request->body
         ];
 //
 //        return $data;
-        Comment::create($data);
+        CommentReply::create($data);
 
-        $request->session()->flash('comment_message', 'Your message has been submitted and is waiting for moderation');
+        $request->session()->flash('reply_message', 'You have sent a reply');
 
         return redirect()->back();
-
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         //
-
-        $post = Post::findOrFail($id);
-
-        $comments = $post->comments;
-
-        return view('admin.comments.show', compact('comments'));
-
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -96,44 +87,23 @@ class PostCommentsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-
-
-        $comment = Comment::findOrFail($id);
-
-        $input = $request->all();
-        $comment->update($input);
-
-        if ($comment->is_active == 1) {
-            Session::flash('approve_comment', ' comment number ' . $id . ' has been approved');
-        } else {
-            Session::flash('disapprove_comment', ' comment number ' . $id . ' has been disapproved');
-        }
-
-        return redirect()->back();
-
         //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $comment = Comment::findOrFail($id);
-        $comment->delete();
-
-        Session::flash('deleted_comment', ' comment number ' . $id . ' has been deleted');
-
-        return redirect()->back();
         //
     }
 }

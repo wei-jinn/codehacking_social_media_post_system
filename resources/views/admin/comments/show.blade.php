@@ -3,22 +3,21 @@
 @section('content')
 
 
-    <h1>Posts</h1>
+    <h1>Comments</h1>
 
     @if(count($comments)>0)
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>No</th>
-            <th>Author</th>
-            <th>Comment</th>
-            <th>Created at</th>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>Author</th>
+                <th>Comment</th>
+                <th>Created at</th>
 
-        </tr>
-        </thead>
-        <tbody>
-
+            </tr>
+            </thead>
+            <tbody>
 
 
             @foreach($comments as $comment)
@@ -33,20 +32,20 @@
 
 
                     <td>
-                    @if($comment->is_active == 1)
+                        @if($comment->is_active == 1)
 
-                        {!! Form::open(['method'=>'PATCH', 'action'=>['PostCommentsController@update', $comment->id]]) !!}
-                        {{csrf_field()}}
+                            {!! Form::open(['method'=>'PATCH', 'action'=>['PostCommentsController@update', $comment->id]]) !!}
+                            {{csrf_field()}}
 
-                        <input type="hidden" name="is_active" value="0">
+                            <input type="hidden" name="is_active" value="0">
 
-                        <div class="form-group">
+                            <div class="form-group">
 
-                        {!! Form:: submit('Disapprove', ['class'=>'btn btn-warning'])!!}
-                        {{csrf_field()}}
-                        {!! Form::close() !!}
+                                {!! Form:: submit('Disapprove', ['class'=>'btn btn-warning'])!!}
+                                {{csrf_field()}}
+                                {!! Form::close() !!}
 
-                        </div>
+                            </div>
 
 
                         @else
@@ -65,7 +64,7 @@
                             </div>
 
 
-                    @endif
+                        @endif
 
                     </td>
 
@@ -91,31 +90,31 @@
             @endforeach
 
 
-@else
-    <h1 class=""text-center> No Comment </h1>
+            @else
+                <h1 class="" text-center> No Comment </h1>
 
-        @endif
+            @endif
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <div>
-        @if(Session::has('approve_comment'))
-            <p class ="bg-info">{{session('approve_comment')}}</p>
+        <div>
+            @if(Session::has('approve_comment'))
+                <p class="bg-info">{{session('approve_comment')}}</p>
 
             @else
-            <p class ="bg-warning">{{session('disapprove_comment')}}</p>
+                <p class="bg-warning">{{session('disapprove_comment')}}</p>
 
 
-        @endif
-    </div>
+            @endif
+        </div>
 
-    <div>
-    @if(Session::has('deleted_comment'))
-        <p class ="bg-danger">{{session('deleted_comment')}}</p>
+        <div>
+            @if(Session::has('deleted_comment'))
+                <p class="bg-danger">{{session('deleted_comment')}}</p>
 
-    @endif
-    </div>
+            @endif
+        </div>
 
 
 

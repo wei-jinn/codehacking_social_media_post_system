@@ -43,6 +43,8 @@ class AdminUsersController extends Controller
         $user = User::findOrFail($id);
 
         $roles = Role::lists('name' , 'id') ->all();
+       // $yourRole = Role::findOrFail($user->role_id)->name;
+
 
        return view('admin.users.edit', compact('user' , 'roles'));
     }

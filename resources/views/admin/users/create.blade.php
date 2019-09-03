@@ -26,6 +26,9 @@
     <div class="form-group">
         {!! Form::label('role_id', 'Role') !!}
         {!! Form::select('role_id', $roles,null, ['class'=>'form-control'])!!}
+
+{{--     THE $roles is defined in AdminUserController@create   --}}
+
         {{csrf_field()}}
 
     </div>

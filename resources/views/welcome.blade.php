@@ -10,6 +10,10 @@
                 <div class="panel-body">
                     Your Application's Landing Page.
                 </div>
+
+                <div class="panel-body">
+                    <a href="/admin/">ADMIN</a>
+                </div>
             </div>
             @if(Session::has('not_admin'))
                 <p class ="bg-danger">{{session('not_admin')}}</p>
