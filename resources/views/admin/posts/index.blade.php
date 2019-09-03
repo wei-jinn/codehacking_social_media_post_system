@@ -47,6 +47,13 @@
         </tbody>
     </table>
 
+    <div class ="row">
+        <div class="col-sm-6 col-sm-offset-5">
+
+            {{$posts->render()}}
+        </div>
+    </div>
+
     @if(Session::has('deleted_post'))
         <p class ="bg-danger">{{session('deleted_post')}}</p>
 

@@ -10,7 +10,7 @@
     <div class="'form-group">
 
         {!! Form::label('title', 'Title:') !!}
-        {!! Form::text('title','new post', ['class'=>'form-control'])!!}
+        {!! Form::text('title', null, ['class'=>'form-control'])!!}
         {{csrf_field()}}
 
     </div>
