@@ -28,7 +28,7 @@ class AdminUsersController extends Controller
 
     public function create()
     {
-        $roles = Role::lists('name', 'id')->all();
+        $roles = Role::pluck('name', 'id')->all();
 
         return view('admin.users.create',compact('roles'));
     }
@@ -42,7 +42,7 @@ class AdminUsersController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $roles = Role::lists('name' , 'id') ->all();
+        $roles = Role::pluck('name' , 'id') ->all();
        // $yourRole = Role::findOrFail($user->role_id)->name;
 
 
