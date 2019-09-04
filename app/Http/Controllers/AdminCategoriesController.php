@@ -85,15 +85,12 @@ class AdminCategoriesController extends Controller
     public function update(Request $request, $id)
     {
         //
-      $category = Category::findOrFail($id);
-        $input = $request->all();
-        $categor/
+
       $category = Category::findOrFail($id);
         $input = $request->all();
         $category->update($input);
 
         return redirect('/admin/categories');
-
 
     }
 

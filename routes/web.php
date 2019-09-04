@@ -61,8 +61,10 @@ Route::resource('/admin/posts', 'AdminPostsController',['names'=>[
     'create'=>'admin.posts.create',
     'store'=>'admin.posts.store',
     'edit'=>'admin.posts.edit',
-    'show' => 'admin.posts.show'
+    'show' => 'admin.posts.show',
+    'update' => 'admin.posts.update'
 ]]);
+
 
 //Route::resource('/admin/categories', 'AdminCategoriesController');
 Route::resource('admin/categories', 'AdminCategoriesController',['names'=>[
@@ -102,3 +104,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('comment/reply', 'CommentRepliesController@createReply');
 
 });
+
+//Route::delete('/delete/posts' ,'DeleteMultiplePostsController@deleteMultiple');
+

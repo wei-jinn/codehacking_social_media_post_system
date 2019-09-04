@@ -122,6 +122,7 @@ class AdminPostsController extends Controller
 
         Auth::user()->posts()->whereId($id)->first()->update($input);
 
+//        return $input;
         return redirect('/admin/posts');
     }
 
@@ -148,7 +149,9 @@ class AdminPostsController extends Controller
 
         }
 
-        public function post($id){
+
+
+    public function post($id){
 
         $post = Post::findOrFail($id);
 

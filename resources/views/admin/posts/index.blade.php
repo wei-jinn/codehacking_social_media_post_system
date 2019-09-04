@@ -7,6 +7,7 @@
     <table class="table">
         <thead>
         <tr>
+{{--            <th><input type ="checkbox" id="options"></th>--}}
             <th>ID</th>
             <th>Photo</th>
             <th>Post Owner</th>
@@ -23,9 +24,33 @@
 
         @if($posts)
 
+{{--            {!! Form::open(['method'=>'POST', 'action'=>'DeleteMultiplePostsController@deleteMultiple']) !!}--}}
+
+
+{{--            {{csrf_field()}}--}}
+{{--            {{method_field('delete')}}--}}
+{{--            <div class="'form-group">--}}
+
+{{--                {!! Form::select('checkBoxArray', array('delMultiple' => 'delete ticked')) !!}--}}
+{{--                {!! Form::text('name',null, ['class'=>'form-control'])!!}--}}
+{{--                {{csrf_field()}}--}}
+
+
+{{--            </div>--}}
+
+{{--            <div class="form-group">--}}
+
+{{--                {!! Form:: submit('Create Post', ['class'=>'btn btn-primary'])!!}--}}
+{{--                {{csrf_field()}}--}}
+
+{{--                </div>--}}
+
+
+
             @foreach($posts as $post)
 <a></a>
                 <tr>
+{{--                    <td><input class="checkBoxes" type="checkbox" name="checkBoxArray[]" value="{{$post->id}}"></td>--}}
                     <td>{{$post->id}}</td>
                     <td><img height="50" src="{{$post->photo ? $post->photo->file : 'http://placehold.it/400x400'}}" alt=""></td>
                     <td><a href="{{route('admin.posts.edit', $post->id)}}">{{$post->user->name}}</a></td>
@@ -47,6 +72,7 @@
         </tbody>
     </table>
 
+{{--    {!! Form::close() !!}--}}
     <div class ="row">
         <div class="col-sm-6 col-sm-offset-5">
 
