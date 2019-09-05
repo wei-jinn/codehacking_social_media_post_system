@@ -10,9 +10,9 @@
 {{--            <th><input type ="checkbox" id="options"></th>--}}
             <th>ID</th>
             <th>Photo</th>
+            <th>Title</th>
             <th>Post Owner</th>
             <th>Category</th>
-            <th>Title</th>
             <th>Body</th>
             <th>Post Body</th>
             <th>Comments</th>
@@ -53,9 +53,10 @@
 {{--                    <td><input class="checkBoxes" type="checkbox" name="checkBoxArray[]" value="{{$post->id}}"></td>--}}
                     <td>{{$post->id}}</td>
                     <td><img height="50" src="{{$post->photo ? $post->photo->file : 'http://placehold.it/400x400'}}" alt=""></td>
-                    <td><a href="{{route('admin.posts.edit', $post->id)}}">{{$post->user->name}}</a></td>
+                    <td><a href="{{route('admin.posts.edit', $post->id)}}">{{$post->title}}</a></td>
+                    <td>{{$post->user->name}}</td>
                     <td>{{$post->category? $post->category->name : 'Uncategorised'}}</td>
-                    <td>{{$post->title}}</td>
+
                     <td>{{$post->body}}</td>
                     <td><a href="{{route('home.post', $post->id)}}">View Post</a></td>
                     <td><a href="{{route('admin.comments.show', $post->id)}}">View Comment</a></td>
